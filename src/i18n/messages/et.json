@@ -1,0 +1,63 @@
+{
+  "brand": "Robinio",
+  "nav": {
+    "home": "Avaleht",
+    "privacy": "Privaatsus",
+    "terms": "Tingimused",
+    "contact": "Kontakt"
+  },
+  "hero": {
+    "eyebrow": "Robinio Invest OÜ",
+    "title": "Kaasaegsed rahatööriistad, mis on lihtsad kasutada",
+    "subtitle": "Robinio loob selge ja turvalise viisi oma raha haldamiseks. Mobiilile loodud, läbipaistvus keskmes.",
+    "ctaPrimary": "Hangi rakendus",
+    "ctaSecondary": "Võta ühendust",
+    "note": "Google Play avaldamine peagi"
+  },
+  "features": {
+    "title": "Selgus ja kindlus igas sammus",
+    "items": [
+      {
+        "title": "Turvaline algusest peale",
+        "description": "Privaatsust hoidev arhitektuur ja vastutustundlikud andmekäsitlused."
+      },
+      {
+        "title": "Selge ülevaade",
+        "description": "Näe olulist kiiresti tänu lihtsatele ja selgetele vaadetele."
+      },
+      {
+        "title": "Valmis kasvuks",
+        "description": "Paindlik platvorm tulevaste toodete ja integratsioonide jaoks."
+      }
+    ]
+  },
+  "footer": {
+    "tagline": "Kaasaegne rahandus, vastutustundlikult.",
+    "company": "Robinio Invest OÜ",
+    "address": "Vesivärava 22-4, Tallinn, Estonia 10126",
+    "domain": "robinioapp.eu",
+    "email": "support@robinioapp.eu",
+    "rights": "Kõik õigused kaitstud."
+  },
+  "privacy": {
+    "title": "Privaatsuspoliitika",
+    "body": "Privaatsuspoliitika avaldatakse siin. Seni kirjuta support@robinioapp.eu"
+  },
+  "terms": {
+    "title": "Teenuse tingimused",
+    "intro": "Robinio veebilehe ja teenuste kasutamisega nõustud järgmiste põhiterminitega:",
+    "items": [
+      "Kasuta teenuseid kooskõlas kehtivate seaduste ja nõuetega.",
+      "Ära kuritarvita ega häiri veebilehte või teenuseid.",
+      "Sellel lehel olev info on esitatud olemasolevas kujul ja võib muutuda."
+    ],
+    "closing": "Need tingimused võivad ajas uueneda koos toodetega."
+  },
+  "contact": {
+    "title": "Kontakt",
+    "subtitle": "Vastame üldjuhul 2 tööpäeva jooksul.",
+    "companyLabel": "Ettevõte",
+    "addressLabel": "Aadress",
+    "emailLabel": "E-post"
+  }
+}
