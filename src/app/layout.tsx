@@ -17,11 +17,11 @@ const plexMono = IBM_Plex_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Robinio",
-    template: "%s | Robinio",
+    default: "MoneyBear",
+    template: "%s | MoneyBear",
   },
   description:
-    "Robinio builds simple, secure financial tools for modern life. Learn more about our mobile app and company.",
+    "MoneyBear builds simple, secure financial tools for modern life. Learn more about our mobile app and company.",
 };
 
 export default function RootLayout({

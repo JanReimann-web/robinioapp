@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useMemo, useState } from "react";
@@ -53,8 +54,15 @@ export default function Header({ locale, brand, nav, cta }: HeaderProps) {
           href={`/${locale}`}
           className="flex items-center gap-3 text-white"
         >
-          <span className="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-white/10 text-lg font-semibold">
-            R
+          <span className="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-white/10 p-1">
+            <Image
+              src="/icon.png"
+              alt={`${brand} logo`}
+              width={28}
+              height={28}
+              className="h-7 w-7 object-contain brightness-75 contrast-110"
+              priority
+            />
           </span>
           <span className="text-lg font-semibold tracking-tight">{brand}</span>
         </Link>

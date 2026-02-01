@@ -27,22 +27,12 @@ export default function Footer({ locale, nav, footer }: FooterProps) {
   const year = new Date().getFullYear();
   return (
     <footer className="bg-slate-950 text-slate-200">
-      <div className="mx-auto grid max-w-6xl gap-8 px-6 py-12 md:grid-cols-[1.4fr_1fr_1fr]">
-        <div className="space-y-4">
-          <div className="flex items-center gap-3">
-            <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-white/10 text-lg font-semibold text-white">
-              R
-            </span>
-            <div>
-              <p className="text-lg font-semibold text-white">{footer.company}</p>
-              <p className="text-sm text-slate-400">{footer.tagline}</p>
-            </div>
-          </div>
-          <div className="space-y-1 text-sm text-slate-400">
-            <p>{company.address}</p>
-            <p>{company.domain}</p>
-            <p>{company.email}</p>
-          </div>
+      <div className="mx-auto grid max-w-6xl gap-8 px-6 py-12 md:grid-cols-[1.2fr_1fr_1fr]">
+        <div className="flex items-center gap-3">
+          <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-white/10 text-lg font-semibold text-white">
+            R
+          </span>
+          <p className="text-lg font-semibold text-white">{footer.company}</p>
         </div>
 
         <div className="space-y-3 text-sm">
@@ -73,6 +63,7 @@ export default function Footer({ locale, nav, footer }: FooterProps) {
             <p>{footer.company}</p>
             <p>{footer.address}</p>
             <p>{footer.domain}</p>
+            <p>{footer.email}</p>
           </div>
         </div>
       </div>

@@ -1,5 +1,5 @@
 {
-  "brand": "Robinio",
+  "brand": "MoneyBear",
   "nav": {
     "home": "Home",
     "privacy": "Privacy",
@@ -8,11 +8,16 @@
   },
   "hero": {
     "eyebrow": "Robinio Invest OÜ",
-    "title": "Modern money tools that feel effortless",
-    "subtitle": "Robinio is building a clear, secure way to manage your finances. Designed mobile-first with transparency at its core.",
+    "title": "A modern financial tool that makes finance feel effortless",
+    "subtitle": "MoneyBear is designed for people who want clarity without complexity.",
     "ctaPrimary": "Get the app",
     "ctaSecondary": "Contact us",
-    "note": "Google Play release coming soon"
+    "note": "Google Play release coming soon",
+    "iosTitle": "iPhone app interest",
+    "iosDescription": "Leave your email and we will notify you when the iOS app is ready.",
+    "iosPlaceholder": "you@email.com",
+    "iosCta": "Notify me",
+    "iosNote": "This opens your email app to send the request."
   },
   "features": {
     "title": "Built for clarity and confidence",
@@ -26,7 +31,7 @@
         "description": "See what matters at a glance with simple, focused dashboards."
       },
       {
-        "title": "Ready for growth",
+        "title": "Tips and Tricks",
         "description": "A scalable platform for future products, services, and integrations."
       }
     ]
@@ -36,16 +41,16 @@
     "company": "Robinio Invest OÜ",
     "address": "Vesivärava 22-4, Tallinn, Estonia 10126",
     "domain": "robinioapp.eu",
-    "email": "support@robinioapp.eu",
+    "email": "support@moneybear.eu",
     "rights": "All rights reserved."
   },
   "privacy": {
     "title": "Privacy Policy",
-    "body": "Privacy policy will be published here. For now contact support@robinioapp.eu"
+    "body": "Privacy policy will be published here. For now contact support@moneybear.eu"
   },
   "terms": {
     "title": "Terms of Service",
-    "intro": "By using the Robinio website and services, you agree to the following basic terms:",
+    "intro": "By using the MoneyBear website and services, you agree to the following basic terms:",
     "items": [
       "Use our services in compliance with applicable laws and regulations.",
       "Do not misuse or attempt to disrupt the website or its services.",

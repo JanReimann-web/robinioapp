@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Layers, ShieldCheck, Sparkles } from "lucide-react";
+import IosInterestForm from "@/components/IosInterestForm";
 import PhoneMock from "@/components/PhoneMock";
 import { getMessages } from "@/i18n/getMessages";
 import { company } from "@/lib/company";
@@ -63,9 +64,6 @@ export default async function HomePage({ params }: HomePageProps) {
 
         <div className="relative mx-auto grid max-w-6xl items-center gap-12 px-6 pb-20 pt-24 lg:grid-cols-[1.1fr_0.9fr] lg:pt-28">
           <div>
-            <p className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white/80">
-              {messages.hero.eyebrow}
-            </p>
             <h1 className="mt-6 text-4xl font-semibold leading-tight tracking-tight text-white sm:text-5xl lg:text-6xl">
               {messages.hero.title}
             </h1>
@@ -79,16 +77,20 @@ export default async function HomePage({ params }: HomePageProps) {
               >
                 {messages.hero.ctaPrimary}
               </Link>
-              <a
-                href={`mailto:${company.email}`}
-                className="inline-flex items-center justify-center rounded-full border border-white/30 px-6 py-3 text-sm font-semibold text-white transition hover:border-white hover:bg-white/10"
-              >
-                {messages.hero.ctaSecondary}
-              </a>
             </div>
             <p className="mt-4 text-sm text-emerald-200/70">
               {messages.hero.note}
             </p>
+            <div className="mt-8 rounded-2xl border border-white/15 bg-white/10 p-5 shadow-lg shadow-emerald-950/30 backdrop-blur">
+              <IosInterestForm
+                title={messages.hero.iosTitle}
+                description={messages.hero.iosDescription}
+                placeholder={messages.hero.iosPlaceholder}
+                cta={messages.hero.iosCta}
+                note={messages.hero.iosNote}
+                emailTo={company.email}
+              />
+            </div>
           </div>
 
           <div className="flex justify-center lg:justify-end">
@@ -101,7 +103,7 @@ export default async function HomePage({ params }: HomePageProps) {
         <div className="mx-auto max-w-6xl px-6">
           <div className="max-w-2xl">
             <p className="text-xs font-semibold uppercase tracking-[0.25em] text-emerald-600">
-              Robinio
+              MoneyBear
             </p>
             <h2 className="mt-3 text-3xl font-semibold text-slate-900 sm:text-4xl">
               {messages.features.title}
