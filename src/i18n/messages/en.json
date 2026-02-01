@@ -17,7 +17,9 @@
     "iosDescription": "Leave your email and we will notify you when the iOS app is ready.",
     "iosPlaceholder": "you@email.com",
     "iosCta": "Notify me",
-    "iosNote": "This opens your email app to send the request."
+    "iosNote": "We will store your email and send a notification when it is ready.",
+    "iosSuccess": "Thanks! You are on the iOS waitlist.",
+    "iosError": "Something went wrong. Please try again."
   },
   "features": {
     "title": "Built for clarity and confidence",

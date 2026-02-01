@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { company } from "@/lib/company";
 
@@ -28,11 +29,14 @@ export default function Footer({ locale, nav, footer }: FooterProps) {
   return (
     <footer className="bg-slate-950 text-slate-200">
       <div className="mx-auto grid max-w-6xl gap-8 px-6 py-12 md:grid-cols-[1.2fr_1fr_1fr]">
-        <div className="flex items-center gap-3">
-          <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-white/10 text-lg font-semibold text-white">
-            R
-          </span>
-          <p className="text-lg font-semibold text-white">{footer.company}</p>
+        <div className="flex items-center">
+          <Image
+            src="/RobinioInvest.png"
+            alt={`${footer.company} logo`}
+            width={1035}
+            height={480}
+            className="h-28 w-auto max-w-full object-contain brightness-110 contrast-110 md:h-40 lg:h-48"
+          />
         </div>
 
         <div className="space-y-3 text-sm">

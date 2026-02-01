@@ -1,9 +1,8 @@
 import Link from "next/link";
 import { Layers, ShieldCheck, Sparkles } from "lucide-react";
 import IosInterestForm from "@/components/IosInterestForm";
-import PhoneMock from "@/components/PhoneMock";
+import PhoneCarousel from "@/components/PhoneCarousel";
 import { getMessages } from "@/i18n/getMessages";
-import { company } from "@/lib/company";
 
 type HomePageProps = {
   params: Promise<{ locale: string }>;
@@ -88,13 +87,14 @@ export default async function HomePage({ params }: HomePageProps) {
                 placeholder={messages.hero.iosPlaceholder}
                 cta={messages.hero.iosCta}
                 note={messages.hero.iosNote}
-                emailTo={company.email}
+                successMessage={messages.hero.iosSuccess}
+                errorMessage={messages.hero.iosError}
               />
             </div>
           </div>
 
           <div className="flex justify-center lg:justify-end">
-            <PhoneMock />
+            <PhoneCarousel />
           </div>
         </div>
       </section>

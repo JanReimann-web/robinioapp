@@ -17,3 +17,31 @@ body {
   color: var(--foreground);
   font-family: var(--font-space-grotesk), system-ui, -apple-system, sans-serif;
 }
+
+@keyframes phone-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes phone-glow {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+.animate-phone-float {
+  animation: phone-float 6s ease-in-out infinite;
+}
+
+.animate-phone-glow {
+  animation: phone-glow 4s ease-in-out infinite;
+}

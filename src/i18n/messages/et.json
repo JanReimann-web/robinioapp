@@ -17,7 +17,9 @@
     "iosDescription": "Jäta oma e-post ja teavitame, kui iOS rakendus on valmis.",
     "iosPlaceholder": "sina@email.com",
     "iosCta": "Teavita mind",
-    "iosNote": "See avab sinu e-posti rakenduse ja saadab soovi."
+    "iosNote": "Salvestame sinu e-posti ja saadame teavituse, kui see on valmis.",
+    "iosSuccess": "Aitäh! Sa oled iOSi ootelistis.",
+    "iosError": "Midagi läks valesti. Palun proovi uuesti."
   },
   "features": {
     "title": "Selgus ja kindlus igas sammus",
