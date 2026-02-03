@@ -94,6 +94,7 @@ export default async function HomePage({ params }: HomePageProps) {
                 cta={messages.hero.iosCta}
                 note={messages.hero.iosNote}
                 successMessage={messages.hero.iosSuccess}
+                duplicateMessage={messages.hero.iosDuplicate}
                 errorMessage={messages.hero.iosError}
               />
             </div>

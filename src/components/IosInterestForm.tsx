@@ -9,6 +9,7 @@ type IosInterestFormProps = {
   cta: string;
   note: string;
   successMessage: string;
+  duplicateMessage: string;
   errorMessage: string;
 };
 
@@ -21,10 +22,12 @@ export default function IosInterestForm({
   cta,
   note,
   successMessage,
+  duplicateMessage,
   errorMessage,
 }: IosInterestFormProps) {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<SubmitStatus>("idle");
+  const [feedbackMessage, setFeedbackMessage] = useState("");
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -33,18 +36,24 @@ export default function IosInterestForm({
     }
 
     setStatus("loading");
+    setFeedbackMessage("");
     try {
       const response = await fetch("/api/ios-interest", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
       });
+      const data = (await response.json()) as {
+        ok?: boolean;
+        duplicate?: boolean;
+      };
 
-      if (!response.ok) {
+      if (!response.ok || data.ok === false) {
         throw new Error("Request failed");
       }
 
       setEmail("");
+      setFeedbackMessage(data.duplicate ? duplicateMessage : successMessage);
       setStatus("success");
     } catch {
       setStatus("error");
@@ -81,10 +90,18 @@ export default function IosInterestForm({
         </button>
       </form>
       {status === "success" && (
-        <p className="text-xs text-emerald-100/90">{successMessage}</p>
+        <div
+          role="status"
+          aria-live="polite"
+          className="rounded-xl border border-emerald-200/30 bg-emerald-950/40 px-3 py-2 text-xs text-emerald-50"
+        >
+          {feedbackMessage || successMessage}
+        </div>
       )}
       {status === "error" && (
-        <p className="text-xs text-red-200">{errorMessage}</p>
+        <p role="alert" className="text-xs text-red-200">
+          {errorMessage}
+        </p>
       )}
       {status === "idle" && (
         <p className="text-xs text-emerald-100/70">{note}</p>
