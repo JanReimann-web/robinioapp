@@ -81,7 +81,7 @@ export default function Header({ locale, brand, nav, cta }: HeaderProps) {
               className="fixed inset-0 w-screen h-screen bg-black/50 z-40 md:hidden"
               onClick={closeMenu}
             />
-            <div className="fixed top-0 right-0 h-screen w-[80vw] max-w-sm bg-emerald-950 z-50 relative px-6 pb-12 pt-24 text-white shadow-2xl md:hidden">
+            <div className="fixed top-0 right-0 h-screen w-[80vw] max-w-sm bg-emerald-950 z-50 px-6 pb-12 pt-24 text-white shadow-2xl md:hidden">
               <button
                 type="button"
                 aria-label="Close menu"
