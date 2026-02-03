@@ -135,7 +135,7 @@ export default function Header({ locale, brand, nav, cta }: HeaderProps) {
 
       {open && (
         <div className="md:hidden">
-          <div className="fixed inset-0 z-50 bg-emerald-950">
+          <div className="fixed inset-0 z-50 bg-emerald-950/95 backdrop-blur-md">
             <div className="mx-auto flex h-full max-w-6xl flex-col gap-8 px-6 pb-12 pt-24">
               <nav className="flex flex-col gap-6 text-xl font-semibold text-white">
                 {navItems.map((item) => (
