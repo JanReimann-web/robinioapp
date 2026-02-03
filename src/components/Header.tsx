@@ -135,63 +135,61 @@ export default function Header({ locale, brand, nav, cta }: HeaderProps) {
 
       {open && (
         <div className="md:hidden">
-          <div className="fixed inset-0 z-40 flex">
-            <button
-              type="button"
-              aria-label="Close menu overlay"
-              className="absolute inset-0 bg-black/40 backdrop-blur-sm"
-              onClick={() => setOpen(false)}
-            />
-            <div className="relative ml-auto flex h-full w-full max-w-sm flex-col gap-8 bg-[#0B3B33] px-6 pb-12 pt-24 text-white shadow-2xl">
-              <nav className="flex flex-col gap-6 text-xl font-semibold">
-                {navItems.map((item) => (
+          <button
+            type="button"
+            aria-label="Close menu overlay"
+            className="fixed inset-0 z-40 bg-black/50"
+            onClick={() => setOpen(false)}
+          />
+          <div className="fixed top-0 right-0 z-50 h-full w-[80vw] max-w-sm bg-emerald-950 px-6 pb-12 pt-24 text-white shadow-2xl">
+            <nav className="flex flex-col gap-6 text-xl font-semibold">
+              {navItems.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className="transition-colors hover:text-emerald-200"
+                  onClick={() => setOpen(false)}
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </nav>
+
+            <div className="flex items-center gap-3">
+              {localeLinks.map((item) => {
+                const active = currentLocale === item.code;
+                return (
                   <Link
-                    key={item.href}
-                    href={item.href}
-                    className="transition-colors hover:text-emerald-200"
+                    key={item.code}
+                    href={buildLocalePath(pathname, item.code)}
+                    className={`rounded-full border px-4 py-2 text-sm font-semibold transition ${
+                      active
+                        ? "border-white bg-white text-emerald-950"
+                        : "border-white/30 text-white"
+                    }`}
                     onClick={() => setOpen(false)}
                   >
                     {item.label}
                   </Link>
-                ))}
-              </nav>
+                );
+              })}
+            </div>
 
-              <div className="flex items-center gap-3">
-                {localeLinks.map((item) => {
-                  const active = currentLocale === item.code;
-                  return (
-                    <Link
-                      key={item.code}
-                      href={buildLocalePath(pathname, item.code)}
-                      className={`rounded-full border px-4 py-2 text-sm font-semibold transition ${
-                        active
-                          ? "border-white bg-white text-emerald-950"
-                          : "border-white/30 text-white"
-                      }`}
-                      onClick={() => setOpen(false)}
-                    >
-                      {item.label}
-                    </Link>
-                  );
-                })}
-              </div>
-
-              <div className="flex flex-col items-start gap-3">
-                <Link
-                  href={tipsItem.href}
-                  className="inline-flex w-fit items-center rounded-full border border-white/30 px-5 py-3 text-base font-semibold text-white transition hover:border-white"
-                  onClick={() => setOpen(false)}
-                >
-                  {tipsItem.label}
-                </Link>
-                <Link
-                  href={`/${locale}/contact`}
-                  className="inline-flex w-fit items-center rounded-full bg-white px-5 py-3 text-base font-semibold text-emerald-950 shadow-sm"
-                  onClick={() => setOpen(false)}
-                >
-                  {cta}
-                </Link>
-              </div>
+            <div className="flex flex-col items-start gap-3">
+              <Link
+                href={tipsItem.href}
+                className="inline-flex w-fit items-center rounded-full border border-white/30 px-5 py-3 text-base font-semibold text-white transition hover:border-white"
+                onClick={() => setOpen(false)}
+              >
+                {tipsItem.label}
+              </Link>
+              <Link
+                href={`/${locale}/contact`}
+                className="inline-flex w-fit items-center rounded-full bg-white px-5 py-3 text-base font-semibold text-emerald-950 shadow-sm"
+                onClick={() => setOpen(false)}
+              >
+                {cta}
+              </Link>
             </div>
           </div>
         </div>
