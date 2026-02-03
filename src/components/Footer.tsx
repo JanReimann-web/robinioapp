@@ -7,6 +7,7 @@ type NavLabels = {
   privacy: string;
   terms: string;
   contact: string;
+  tips: string;
 };
 
 type FooterLabels = {
@@ -46,6 +47,9 @@ export default function Footer({ locale, nav, footer }: FooterProps) {
           <div className="flex flex-col gap-2">
             <Link href={`/${locale}`} className="hover:text-white">
               {nav.home}
+            </Link>
+            <Link href={`/${locale}/tips`} className="hover:text-white">
+              {nav.tips}
             </Link>
             <Link href={`/${locale}/privacy`} className="hover:text-white">
               {nav.privacy}
