@@ -11,6 +11,7 @@ type NavLabels = {
   privacy: string;
   terms: string;
   contact: string;
+  tips: string;
 };
 
 type HeaderProps = {
@@ -39,6 +40,10 @@ export default function Header({ locale, brand, nav, cta }: HeaderProps) {
       { href: `/${locale}/terms`, label: nav.terms },
       { href: `/${locale}/contact`, label: nav.contact },
     ],
+    [locale, nav]
+  );
+  const tipsItem = useMemo(
+    () => ({ href: `/${locale}/tips`, label: nav.tips }),
     [locale, nav]
   );
 
@@ -105,6 +110,12 @@ export default function Header({ locale, brand, nav, cta }: HeaderProps) {
             })}
           </div>
           <Link
+            href={tipsItem.href}
+            className="rounded-full border border-white/20 bg-white/5 px-4 py-2 text-sm font-semibold text-white/90 transition hover:border-white/40 hover:bg-white/10"
+          >
+            {tipsItem.label}
+          </Link>
+          <Link
             href={`/${locale}/contact`}
             className="rounded-full bg-white px-4 py-2 text-sm font-semibold text-emerald-950 shadow-sm transition hover:-translate-y-0.5 hover:bg-emerald-100"
           >
@@ -124,7 +135,7 @@ export default function Header({ locale, brand, nav, cta }: HeaderProps) {
 
       {open && (
         <div className="md:hidden">
-          <div className="fixed inset-0 z-40 bg-emerald-950/95 backdrop-blur">
+          <div className="fixed inset-0 z-50 bg-emerald-950">
             <div className="mx-auto flex h-full max-w-6xl flex-col gap-8 px-6 pb-12 pt-24">
               <nav className="flex flex-col gap-6 text-xl font-semibold text-white">
                 {navItems.map((item) => (
@@ -159,13 +170,22 @@ export default function Header({ locale, brand, nav, cta }: HeaderProps) {
                 })}
               </div>
 
-              <Link
-                href={`/${locale}/contact`}
-                className="inline-flex w-fit items-center rounded-full bg-white px-5 py-3 text-base font-semibold text-emerald-950 shadow-sm"
-                onClick={() => setOpen(false)}
-              >
-                {cta}
-              </Link>
+              <div className="flex flex-col items-start gap-3">
+                <Link
+                  href={tipsItem.href}
+                  className="inline-flex w-fit items-center rounded-full border border-white/30 px-5 py-3 text-base font-semibold text-white transition hover:border-white"
+                  onClick={() => setOpen(false)}
+                >
+                  {tipsItem.label}
+                </Link>
+                <Link
+                  href={`/${locale}/contact`}
+                  className="inline-flex w-fit items-center rounded-full bg-white px-5 py-3 text-base font-semibold text-emerald-950 shadow-sm"
+                  onClick={() => setOpen(false)}
+                >
+                  {cta}
+                </Link>
+              </div>
             </div>
           </div>
         </div>
