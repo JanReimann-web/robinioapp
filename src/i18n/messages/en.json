@@ -19,7 +19,8 @@
     "iosPlaceholder": "you@email.com",
     "iosCta": "Notify me",
     "iosNote": "We will store your email and send a notification when it is ready.",
-    "iosSuccess": "Thanks! You are on the iOS waitlist.",
+    "iosSuccess": "Thanks! You're registered for the iOS waitlist.",
+    "iosDuplicate": "You're already registered for the iOS waitlist.",
     "iosError": "Something went wrong. Please try again."
   },
   "features": {
