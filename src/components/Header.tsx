@@ -54,7 +54,7 @@ export default function Header({ locale, brand, nav, cta }: HeaderProps) {
 
   return (
     <header className="sticky top-0 z-50 border-b border-white/10 bg-emerald-950/70 backdrop-blur">
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
+      <div className="relative z-50 mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
         <Link
           href={`/${locale}`}
           className="flex items-center gap-3 text-white"
@@ -135,9 +135,15 @@ export default function Header({ locale, brand, nav, cta }: HeaderProps) {
 
       {open && (
         <div className="md:hidden">
-          <div className="fixed inset-0 z-50 bg-emerald-950 backdrop-blur-md">
-            <div className="mx-auto flex h-full max-w-6xl flex-col gap-8 px-6 pb-12 pt-24">
-              <nav className="flex flex-col gap-6 text-xl font-semibold text-white">
+          <div className="fixed inset-0 z-40 flex">
+            <button
+              type="button"
+              aria-label="Close menu overlay"
+              className="absolute inset-0 bg-black/40 backdrop-blur-sm"
+              onClick={() => setOpen(false)}
+            />
+            <div className="relative ml-auto flex h-full w-full max-w-sm flex-col gap-8 bg-[#0B3B33] px-6 pb-12 pt-24 text-white shadow-2xl">
+              <nav className="flex flex-col gap-6 text-xl font-semibold">
                 {navItems.map((item) => (
                   <Link
                     key={item.href}
