@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { promises as fs } from "fs";
 import path from "path";
+import { applyRateLimit, isAuthorized } from "@/lib/adminSecurity";
 
 type InterestEntry = {
   email: string;
@@ -12,22 +13,19 @@ const dataFile = path.join(dataDir, "ios-interest.json");
 
 export const runtime = "nodejs";
 
-const getAdminCode = (request: Request) => {
-  const url = new URL(request.url);
-  return (
-    request.headers.get("x-admin-code") ||
-    url.searchParams.get("code") ||
-    ""
-  );
-};
+const ADMIN_RATE = { windowMs: 5 * 60 * 1000, max: 20 };
 
-const isAuthorized = (request: Request) => {
-  const adminCode = process.env.ADMIN_ACCESS_CODE;
-  if (!adminCode) {
-    return false;
-  }
-  return getAdminCode(request) === adminCode;
-};
+const rateLimitResponse = (retryAfter: number) =>
+  NextResponse.json(
+    { ok: false, message: "Too many requests" },
+    {
+      status: 429,
+      headers: {
+        "Retry-After": String(retryAfter),
+        "Cache-Control": "no-store",
+      },
+    }
+  );
 
 const readEntries = async (): Promise<InterestEntry[]> => {
   try {
@@ -49,10 +47,14 @@ const escapeCsv = (value: string) => {
 };
 
 export async function GET(request: Request) {
+  const limit = applyRateLimit(request, "admin", ADMIN_RATE);
+  if (!limit.allowed) {
+    return rateLimitResponse(limit.retryAfter);
+  }
   if (!isAuthorized(request)) {
     return NextResponse.json(
       { ok: false, message: "Unauthorized" },
-      { status: 401 }
+      { status: 401, headers: { "Cache-Control": "no-store" } }
     );
   }
 
@@ -67,6 +69,7 @@ export async function GET(request: Request) {
     headers: {
       "Content-Type": "text/csv; charset=utf-8",
       "Content-Disposition": "attachment; filename=\"ios-interest.csv\"",
+      "Cache-Control": "no-store",
     },
   });
 }

@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { promises as fs } from "fs";
 import path from "path";
+import { applyRateLimit, isAuthorized } from "@/lib/adminSecurity";
 
 type InterestEntry = {
   email: string;
@@ -32,36 +33,45 @@ const writeEntries = async (entries: InterestEntry[]) => {
 const isValidEmail = (email: string) =>
   /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
-const getAdminCode = (request: Request) => {
-  const url = new URL(request.url);
-  return (
-    request.headers.get("x-admin-code") ||
-    url.searchParams.get("code") ||
-    ""
-  );
-};
+const ADMIN_RATE = { windowMs: 5 * 60 * 1000, max: 20 };
+const PUBLIC_RATE = { windowMs: 60 * 1000, max: 8 };
 
-const isAuthorized = (request: Request) => {
-  const adminCode = process.env.ADMIN_ACCESS_CODE;
-  if (!adminCode) {
-    return false;
-  }
-  return getAdminCode(request) === adminCode;
-};
+const rateLimitResponse = (retryAfter: number) =>
+  NextResponse.json(
+    { ok: false, message: "Too many requests" },
+    {
+      status: 429,
+      headers: {
+        "Retry-After": String(retryAfter),
+        "Cache-Control": "no-store",
+      },
+    }
+  );
 
 export async function GET(request: Request) {
+  const limit = applyRateLimit(request, "admin", ADMIN_RATE);
+  if (!limit.allowed) {
+    return rateLimitResponse(limit.retryAfter);
+  }
   if (!isAuthorized(request)) {
     return NextResponse.json(
       { ok: false, message: "Unauthorized" },
-      { status: 401 }
+      { status: 401, headers: { "Cache-Control": "no-store" } }
     );
   }
 
   const entries = await readEntries();
-  return NextResponse.json({ ok: true, entries });
+  return NextResponse.json(
+    { ok: true, entries },
+    { headers: { "Cache-Control": "no-store" } }
+  );
 }
 
 export async function POST(request: Request) {
+  const limit = applyRateLimit(request, "public", PUBLIC_RATE);
+  if (!limit.allowed) {
+    return rateLimitResponse(limit.retryAfter);
+  }
   try {
     const body = (await request.json()) as { email?: string };
     const email = (body.email ?? "").trim().toLowerCase();
@@ -81,11 +91,53 @@ export async function POST(request: Request) {
       await writeEntries(entries);
     }
 
-    return NextResponse.json({ ok: true, duplicate: exists });
+    return NextResponse.json(
+      { ok: true, duplicate: exists },
+      { headers: { "Cache-Control": "no-store" } }
+    );
   } catch (error) {
     return NextResponse.json(
       { ok: false, message: "Server error" },
-      { status: 500 }
+      { status: 500, headers: { "Cache-Control": "no-store" } }
+    );
+  }
+}
+
+export async function DELETE(request: Request) {
+  const limit = applyRateLimit(request, "admin", ADMIN_RATE);
+  if (!limit.allowed) {
+    return rateLimitResponse(limit.retryAfter);
+  }
+  if (!isAuthorized(request)) {
+    return NextResponse.json(
+      { ok: false, message: "Unauthorized" },
+      { status: 401, headers: { "Cache-Control": "no-store" } }
+    );
+  }
+
+  try {
+    const body = (await request.json()) as { email?: string };
+    const email = (body.email ?? "").trim().toLowerCase();
+
+    if (!email || !isValidEmail(email)) {
+      return NextResponse.json(
+        { ok: false, message: "Invalid email" },
+        { status: 400 }
+      );
+    }
+
+    const entries = await readEntries();
+    const nextEntries = entries.filter((entry) => entry.email !== email);
+    await writeEntries(nextEntries);
+
+    return NextResponse.json(
+      { ok: true, removed: entries.length - nextEntries.length },
+      { headers: { "Cache-Control": "no-store" } }
+    );
+  } catch (error) {
+    return NextResponse.json(
+      { ok: false, message: "Server error" },
+      { status: 500, headers: { "Cache-Control": "no-store" } }
     );
   }
 }

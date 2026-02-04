@@ -76,12 +76,6 @@ export default async function HomePage({ params }: HomePageProps) {
               >
                 {messages.hero.ctaPrimary}
               </Link>
-              <Link
-                href={`/${locale}/tips`}
-                className="inline-flex items-center justify-center rounded-full border border-white/30 bg-white/10 px-6 py-3 text-sm font-semibold text-white/90 shadow-lg shadow-emerald-950/30 transition hover:-translate-y-0.5 hover:border-white/50 hover:bg-white/20"
-              >
-                {messages.nav.tips}
-              </Link>
             </div>
             <p className="mt-4 text-sm text-emerald-200/70">
               {messages.hero.note}
@@ -103,10 +97,10 @@ export default async function HomePage({ params }: HomePageProps) {
           <div className="flex justify-center lg:justify-end">
             <PhoneCarousel />
           </div>
-          <div className="mt-6 flex justify-center md:hidden">
+          <div className="mt-6 flex w-full md:hidden">
             <Link
               href={`/${locale}/tips`}
-              className="inline-flex items-center justify-center rounded-full border border-white/30 px-6 py-3 text-sm font-semibold text-white transition hover:border-white hover:bg-white/10"
+              className="inline-flex w-full items-center justify-center rounded-full border border-white/30 bg-white/10 px-6 py-3 text-sm font-semibold text-white/90 shadow-lg shadow-emerald-950/30 transition hover:-translate-y-0.5 hover:border-white/50 hover:bg-white/20"
             >
               {messages.nav.tips}
             </Link>

@@ -26,6 +26,8 @@ export default function AdminPage() {
             countLabel: "Kokku",
             empty: "Kirjeid pole.",
             error: "Ligipääs keelatud või midagi läks valesti.",
+            delete: "Kustuta",
+            confirmDelete: "Kas oled kindel, et soovid selle e-posti eemaldada?",
             helper:
               "See leht on kaitstud admin-koodiga ja pole avalikult linkitud.",
           }
@@ -39,6 +41,9 @@ export default function AdminPage() {
             countLabel: "Total",
             empty: "No entries yet.",
             error: "Unauthorized or something went wrong.",
+            delete: "Delete",
+            confirmDelete:
+              "Are you sure you want to remove this email from the list?",
             helper:
               "This page is protected by an admin code and not linked publicly.",
           },
@@ -48,6 +53,7 @@ export default function AdminPage() {
   const [code, setCode] = useState("");
   const [entries, setEntries] = useState<Entry[] | null>(null);
   const [loading, setLoading] = useState(false);
+  const [deletingEmail, setDeletingEmail] = useState<string | null>(null);
   const [error, setError] = useState("");
 
   const loadEntries = async () => {
@@ -93,6 +99,32 @@ export default function AdminPage() {
       setError(copy.error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const deleteEntry = async (email: string) => {
+    if (!code || deletingEmail) return;
+    const confirmed = window.confirm(copy.confirmDelete);
+    if (!confirmed) return;
+
+    setDeletingEmail(email);
+    setError("");
+    try {
+      const response = await fetch("/api/ios-interest", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json", "x-admin-code": code },
+        body: JSON.stringify({ email }),
+      });
+      if (!response.ok) {
+        throw new Error("Delete failed");
+      }
+      setEntries((prev) =>
+        prev ? prev.filter((entry) => entry.email !== email) : prev
+      );
+    } catch {
+      setError(copy.error);
+    } finally {
+      setDeletingEmail(null);
     }
   };
 
@@ -151,14 +183,24 @@ export default function AdminPage() {
             {entries?.map((entry) => (
               <div
                 key={`${entry.email}-${entry.createdAt}`}
-                className="flex flex-col gap-1 rounded-xl border border-slate-100 bg-slate-50 px-4 py-3"
+                className="flex flex-col gap-3 rounded-xl border border-slate-100 bg-slate-50 px-4 py-3 sm:flex-row sm:items-center sm:justify-between"
               >
-                <span className="font-semibold text-slate-900">
-                  {entry.email}
-                </span>
-                <span className="text-xs text-slate-500">
-                  {new Date(entry.createdAt).toLocaleString()}
-                </span>
+                <div className="flex flex-col gap-1">
+                  <span className="font-semibold text-slate-900">
+                    {entry.email}
+                  </span>
+                  <span className="text-xs text-slate-500">
+                    {new Date(entry.createdAt).toLocaleString()}
+                  </span>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => deleteEntry(entry.email)}
+                  disabled={loading || deletingEmail === entry.email}
+                  className="rounded-full border border-red-200 bg-red-50 px-4 py-2 text-xs font-semibold text-red-600 transition hover:bg-red-100 disabled:cursor-not-allowed disabled:opacity-70"
+                >
+                  {copy.delete}
+                </button>
               </div>
             ))}
             {!entries && (
