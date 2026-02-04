@@ -28,20 +28,20 @@ type FooterProps = {
 export default function Footer({ locale, nav, footer }: FooterProps) {
   const year = new Date().getFullYear();
   return (
-    <footer className="bg-slate-950 text-slate-200">
+    <footer className="bg-emerald-950 text-emerald-100">
       <div className="mx-auto grid max-w-6xl gap-8 px-6 py-12 md:grid-cols-[1.2fr_1fr_1fr]">
-        <div className="flex items-center">
+        <div className="flex items-center justify-center md:justify-start">
           <Image
             src="/RobinioInvest.png"
             alt={`${footer.company} logo`}
-            width={1035}
-            height={480}
-            className="h-28 w-auto max-w-full object-contain brightness-110 contrast-110 md:h-40 lg:h-48"
+            width={1400}
+            height={650}
+            className="h-44 w-auto max-w-full object-contain brightness-110 contrast-110 sm:h-40 md:h-48 lg:h-56"
           />
         </div>
 
         <div className="space-y-3 text-sm">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-300/70">
             Links
           </p>
           <div className="flex flex-col gap-2">
@@ -64,10 +64,10 @@ export default function Footer({ locale, nav, footer }: FooterProps) {
         </div>
 
         <div className="space-y-3 text-sm">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-300/70">
             Company
           </p>
-          <div className="space-y-2 text-slate-400">
+          <div className="space-y-2 text-emerald-200/80">
             <p>{footer.company}</p>
             <p>{footer.address}</p>
             <p>{footer.domain}</p>
@@ -76,7 +76,7 @@ export default function Footer({ locale, nav, footer }: FooterProps) {
         </div>
       </div>
       <div className="border-t border-white/10">
-        <div className="mx-auto flex max-w-6xl flex-col gap-2 px-6 py-4 text-xs text-slate-500 md:flex-row md:items-center md:justify-between">
+        <div className="mx-auto flex max-w-6xl flex-col gap-2 px-6 py-4 text-xs text-emerald-300/70 md:flex-row md:items-center md:justify-between">
           <p>
             © {year} {footer.company}. {footer.rights}
           </p>

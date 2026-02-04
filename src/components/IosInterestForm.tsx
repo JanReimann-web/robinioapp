@@ -66,37 +66,38 @@ export default function IosInterestForm({
         <p className="text-sm font-semibold text-white">{title}</p>
         <p className="mt-1 text-sm text-emerald-100/80">{description}</p>
       </div>
-      <form
-        className="flex flex-col gap-3 sm:flex-row"
-        onSubmit={handleSubmit}
-      >
-        <input
-          type="email"
-          required
-          value={email}
-          onChange={(event) => setEmail(event.target.value)}
-          placeholder={placeholder}
-          suppressHydrationWarning
-          className="h-11 w-full rounded-full border border-white/20 bg-white/10 px-4 text-sm text-white placeholder:text-emerald-100/60 focus:border-emerald-200 focus:outline-none focus:ring-2 focus:ring-emerald-200/40 sm:flex-1"
-          disabled={status === "loading"}
-        />
-        <button
-          type="submit"
-          suppressHydrationWarning
-          className="h-11 rounded-full bg-white px-5 text-sm font-semibold text-emerald-950 transition hover:-translate-y-0.5 hover:bg-emerald-100 disabled:cursor-not-allowed disabled:opacity-70"
-          disabled={status === "loading"}
-        >
-          {cta}
-        </button>
-      </form>
-      {status === "success" && (
+      {status === "success" ? (
         <div
           role="status"
           aria-live="polite"
-          className="rounded-xl border border-emerald-200/30 bg-emerald-950/40 px-3 py-2 text-xs text-emerald-50"
+          className="rounded-xl border border-emerald-200/30 bg-emerald-950/40 px-3 py-2 text-sm text-emerald-50"
         >
           {feedbackMessage || successMessage}
         </div>
+      ) : (
+        <form
+          className="flex flex-col gap-3 sm:flex-row"
+          onSubmit={handleSubmit}
+        >
+          <input
+            type="email"
+            required
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
+            placeholder={placeholder}
+            suppressHydrationWarning
+            className="h-11 w-full rounded-full border border-white/20 bg-white/10 px-4 text-sm text-white placeholder:text-emerald-100/60 focus:border-emerald-200 focus:outline-none focus:ring-2 focus:ring-emerald-200/40 sm:flex-1"
+            disabled={status === "loading"}
+          />
+          <button
+            type="submit"
+            suppressHydrationWarning
+            className="h-11 rounded-full bg-white px-5 text-sm font-semibold text-emerald-950 transition hover:-translate-y-0.5 hover:bg-emerald-100 disabled:cursor-not-allowed disabled:opacity-70"
+            disabled={status === "loading"}
+          >
+            {cta}
+          </button>
+        </form>
       )}
       {status === "error" && (
         <p role="alert" className="text-xs text-red-200">

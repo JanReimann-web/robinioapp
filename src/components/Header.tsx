@@ -4,7 +4,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
-import { createPortal } from "react-dom";
 import { Menu, X } from "lucide-react";
 
 type NavLabels = {
@@ -30,7 +29,6 @@ const buildLocalePath = (pathname: string, targetLocale: string) => {
 
 export default function Header({ locale, brand, nav, cta }: HeaderProps) {
   const [open, setOpen] = useState(false);
-  const [portalRoot, setPortalRoot] = useState<HTMLElement | null>(null);
   const pathname = usePathname() ?? "/";
   const segments = pathname.split("/").filter(Boolean);
   const currentLocale = segments[0] ?? locale;
@@ -55,10 +53,6 @@ export default function Header({ locale, brand, nav, cta }: HeaderProps) {
   ];
 
   useEffect(() => {
-    setPortalRoot(document.body);
-  }, []);
-
-  useEffect(() => {
     if (!open) return;
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
@@ -69,81 +63,14 @@ export default function Header({ locale, brand, nav, cta }: HeaderProps) {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [open]);
 
+  useEffect(() => {
+    document.body.style.overflow = open ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [open]);
+
   const closeMenu = () => setOpen(false);
-
-  const mobileMenu =
-    open && portalRoot
-      ? createPortal(
-          <>
-            <button
-              type="button"
-              aria-label="Close menu overlay"
-              className="fixed inset-0 w-screen h-screen bg-black/50 z-40 md:hidden"
-              onClick={closeMenu}
-            />
-            <div className="fixed top-0 right-0 h-screen w-[80vw] max-w-sm bg-emerald-950 z-50 px-6 pb-12 pt-24 text-white shadow-2xl md:hidden">
-              <button
-                type="button"
-                aria-label="Close menu"
-                className="absolute top-4 right-4 p-2 rounded-md text-white/90 hover:text-white hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/30"
-                onClick={closeMenu}
-              >
-                <X size={20} />
-              </button>
-              <nav className="flex flex-col gap-6 text-xl font-semibold">
-                {navItems.map((item) => (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    className="transition-colors hover:text-emerald-200"
-                    onClick={closeMenu}
-                  >
-                    {item.label}
-                  </Link>
-                ))}
-              </nav>
-
-              <div className="flex items-center gap-3">
-                {localeLinks.map((item) => {
-                  const active = currentLocale === item.code;
-                  return (
-                    <Link
-                      key={item.code}
-                      href={buildLocalePath(pathname, item.code)}
-                      className={`rounded-full border px-4 py-2 text-sm font-semibold transition ${
-                        active
-                          ? "border-white bg-white text-emerald-950"
-                          : "border-white/30 text-white"
-                      }`}
-                      onClick={closeMenu}
-                    >
-                      {item.label}
-                    </Link>
-                  );
-                })}
-              </div>
-
-              <div className="flex flex-col items-start gap-3">
-                <Link
-                  href={tipsItem.href}
-                  className="inline-flex w-fit items-center rounded-full border border-white/30 px-5 py-3 text-base font-semibold text-white transition hover:border-white"
-                  onClick={closeMenu}
-                >
-                  {tipsItem.label}
-                </Link>
-                <Link
-                  href={`/${locale}/contact`}
-                  className="inline-flex w-fit items-center rounded-full bg-white px-5 py-3 text-base font-semibold text-emerald-950 shadow-sm"
-                  onClick={closeMenu}
-                >
-                  {cta}
-                </Link>
-              </div>
-            </div>
-          </>,
-          portalRoot
-        )
-      : null;
 
   return (
     <>
@@ -231,7 +158,75 @@ export default function Header({ locale, brand, nav, cta }: HeaderProps) {
           </button>
         </div>
       </header>
-      {mobileMenu}
+      {open && (
+        <div className="fixed inset-0 z-50 md:hidden">
+          <button
+            type="button"
+            aria-label="Close menu overlay"
+            className="absolute inset-0 h-full w-full bg-black/50"
+            onClick={closeMenu}
+          />
+          <div className="absolute right-0 top-0 h-full w-[80vw] max-w-sm bg-emerald-950 px-6 pb-12 pt-24 text-white shadow-2xl">
+            <button
+              type="button"
+              aria-label="Close menu"
+              className="absolute right-4 top-4 rounded-md p-2 text-white/90 hover:bg-white/10 hover:text-white focus:outline-none focus:ring-2 focus:ring-white/30"
+              onClick={closeMenu}
+            >
+              <X size={20} />
+            </button>
+            <nav className="flex flex-col gap-6 text-xl font-semibold">
+              {navItems.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className="transition-colors hover:text-emerald-200"
+                  onClick={closeMenu}
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </nav>
+
+            <div className="mt-8 flex items-center gap-3">
+              {localeLinks.map((item) => {
+                const active = currentLocale === item.code;
+                return (
+                  <Link
+                    key={item.code}
+                    href={buildLocalePath(pathname, item.code)}
+                    className={`rounded-full border px-4 py-2 text-sm font-semibold transition ${
+                      active
+                        ? "border-white bg-white text-emerald-950"
+                        : "border-white/30 text-white"
+                    }`}
+                    onClick={closeMenu}
+                  >
+                    {item.label}
+                  </Link>
+                );
+              })}
+            </div>
+
+            <div className="mt-8 flex flex-col items-start gap-3">
+              <Link
+                href={tipsItem.href}
+                className="inline-flex w-fit items-center rounded-full border border-white/30 px-5 py-3 text-base font-semibold text-white transition hover:border-white"
+                onClick={closeMenu}
+              >
+                {tipsItem.label}
+              </Link>
+              <Link
+                href={`/${locale}/contact`}
+                className="inline-flex w-fit items-center rounded-full bg-white px-5 py-3 text-base font-semibold text-emerald-950 shadow-sm"
+                onClick={closeMenu}
+              >
+                {cta}
+              </Link>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }

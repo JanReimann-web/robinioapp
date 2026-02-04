@@ -32,6 +32,7 @@ const slides: Slide[] = [
 
 export default function PhoneCarousel() {
   const [index, setIndex] = useState(0);
+  const [startX, setStartX] = useState<number | null>(null);
   const current = slides[index];
 
   const translate = useMemo(
@@ -43,12 +44,34 @@ export default function PhoneCarousel() {
     setIndex((prev) => (prev - 1 + slides.length) % slides.length);
   const goNext = () => setIndex((prev) => (prev + 1) % slides.length);
 
+  const handleTouchStart = (event: React.TouchEvent<HTMLDivElement>) => {
+    setStartX(event.touches[0]?.clientX ?? null);
+  };
+
+  const handleTouchEnd = (event: React.TouchEvent<HTMLDivElement>) => {
+    if (startX === null) return;
+    const endX = event.changedTouches[0]?.clientX ?? startX;
+    const delta = endX - startX;
+    if (Math.abs(delta) > 40) {
+      if (delta > 0) {
+        goPrev();
+      } else {
+        goNext();
+      }
+    }
+    setStartX(null);
+  };
+
   return (
     <div className="relative mx-auto w-full max-w-sm lg:max-w-md">
       <div className="absolute -left-10 top-8 h-32 w-32 rounded-full bg-emerald-400/20 blur-3xl" />
       <div className="absolute -right-12 bottom-6 h-32 w-32 rounded-full bg-teal-400/20 blur-3xl" />
 
-      <div className="relative overflow-hidden">
+      <div
+        className="relative overflow-hidden touch-pan-y"
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+      >
         <div
           className="flex transition-transform duration-700 ease-out"
           style={{ transform: translate }}
@@ -89,38 +112,20 @@ export default function PhoneCarousel() {
         </div>
       </div>
 
-      <div className="mt-6 flex items-center justify-center gap-4">
-        <button
-          type="button"
-          onClick={goPrev}
-          className="rounded-full border border-white/20 px-4 py-2 text-base font-semibold text-white/80 transition hover:border-white/40 hover:text-white"
-          aria-label="Previous screen"
-        >
-          {"<"}
-        </button>
-        <div className="flex items-center gap-2">
-          {slides.map((slide, slideIndex) => (
-            <button
-              key={slide.id}
-              type="button"
-              onClick={() => setIndex(slideIndex)}
-              aria-label={`Go to ${slide.label}`}
-              className={`h-2.5 w-2.5 rounded-full transition ${
-                slideIndex === index
-                  ? "bg-white"
-                  : "bg-white/30 hover:bg-white/60"
-              }`}
-            />
-          ))}
-        </div>
-        <button
-          type="button"
-          onClick={goNext}
-          className="rounded-full border border-white/20 px-4 py-2 text-base font-semibold text-white/80 transition hover:border-white/40 hover:text-white"
-          aria-label="Next screen"
-        >
-          {">"}
-        </button>
+      <div className="mt-6 flex items-center justify-center gap-2">
+        {slides.map((slide, slideIndex) => (
+          <button
+            key={slide.id}
+            type="button"
+            onClick={() => setIndex(slideIndex)}
+            aria-label={`Go to ${slide.label}`}
+            className={`h-2.5 w-2.5 rounded-full transition ${
+              slideIndex === index
+                ? "bg-white"
+                : "bg-white/30 hover:bg-white/60"
+            }`}
+          />
+        ))}
       </div>
       <p className="sr-only">{current.label}</p>
     </div>
