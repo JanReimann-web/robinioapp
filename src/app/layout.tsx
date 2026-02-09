@@ -22,6 +22,11 @@ export const metadata: Metadata = {
   },
   description:
     "MoneyBear builds simple, secure financial tools for modern life. Learn more about our mobile app and company.",
+  icons: {
+    icon: [{ url: "/Moneybearlogo.svg", type: "image/svg+xml" }],
+    shortcut: "/Moneybearlogo.svg",
+    apple: "/Moneybearlogo.svg",
+  },
 };
 
 export default function RootLayout({
