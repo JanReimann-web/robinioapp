@@ -17,9 +17,9 @@ export default async function PrivacyPage({ params }: PrivacyPageProps) {
         <h1 className="mt-3 text-3xl font-semibold text-slate-900 sm:text-4xl">
           {messages.privacy.title}
         </h1>
-        <p className="mt-6 text-base leading-relaxed text-slate-600">
-          {messages.privacy.body}
-        </p>
+        <div className="mt-6 whitespace-pre-line text-base leading-7 text-slate-600">
+          {messages.privacy.body.join("\n")}
+        </div>
       </div>
     </section>
   );

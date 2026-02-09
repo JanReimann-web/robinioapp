@@ -17,16 +17,9 @@ export default async function TermsPage({ params }: TermsPageProps) {
         <h1 className="mt-3 text-3xl font-semibold text-slate-900 sm:text-4xl">
           {messages.terms.title}
         </h1>
-        <p className="mt-6 text-base text-slate-600">{messages.terms.intro}</p>
-        <ul className="mt-6 space-y-3 text-base text-slate-600">
-          {messages.terms.items.map((item: string) => (
-            <li key={item} className="flex gap-3">
-              <span className="mt-2 h-2 w-2 flex-shrink-0 rounded-full bg-emerald-500" />
-              <span>{item}</span>
-            </li>
-          ))}
-        </ul>
-        <p className="mt-6 text-base text-slate-600">{messages.terms.closing}</p>
+        <div className="mt-6 whitespace-pre-line text-base leading-7 text-slate-600">
+          {messages.terms.body.join("\n")}
+        </div>
       </div>
     </section>
   );
