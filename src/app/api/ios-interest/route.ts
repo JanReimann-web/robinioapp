@@ -69,6 +69,7 @@ export async function POST(request: Request) {
 
   const db = getWaitlistFirestore();
   if (!db) {
+    console.error("[ios-interest] Firestore is not configured (missing env vars).");
     return NextResponse.json(
       { ok: false, message: "Server misconfigured" },
       { status: 500, headers: { "Cache-Control": "no-store" } }
@@ -105,7 +106,13 @@ export async function POST(request: Request) {
       { ok: true, duplicate: exists },
       { headers: { "Cache-Control": "no-store" } }
     );
-  } catch {
+  } catch (error) {
+    const err = error as { name?: unknown; message?: unknown; code?: unknown };
+    console.error("[ios-interest] POST failed", {
+      name: typeof err?.name === "string" ? err.name : "unknown",
+      code: err?.code,
+      message: typeof err?.message === "string" ? err.message : String(error),
+    });
     return NextResponse.json(
       { ok: false, message: "Server error" },
       { status: 500, headers: { "Cache-Control": "no-store" } }
