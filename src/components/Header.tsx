@@ -8,6 +8,7 @@ import { Menu, X } from "lucide-react";
 
 type NavLabels = {
   home: string;
+  pricing: string;
   privacy: string;
   terms: string;
   contact: string;
@@ -36,6 +37,7 @@ export default function Header({ locale, brand, nav, cta }: HeaderProps) {
   const navItems = useMemo(
     () => [
       { href: `/${locale}`, label: nav.home },
+      { href: `/${locale}/pricing`, label: nav.pricing },
       { href: `/${locale}/privacy`, label: nav.privacy },
       { href: `/${locale}/terms`, label: nav.terms },
       { href: `/${locale}/contact`, label: nav.contact },

@@ -1,9 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
-import { company } from "@/lib/company";
 
 type NavLabels = {
   home: string;
+  pricing: string;
   privacy: string;
   terms: string;
   contact: string;
@@ -47,6 +47,9 @@ export default function Footer({ locale, nav, footer }: FooterProps) {
           <div className="flex flex-col gap-2">
             <Link href={`/${locale}`} className="hover:text-white">
               {nav.home}
+            </Link>
+            <Link href={`/${locale}/pricing`} className="hover:text-white">
+              {nav.pricing}
             </Link>
             <Link href={`/${locale}/tips`} className="hover:text-white">
               {nav.tips}

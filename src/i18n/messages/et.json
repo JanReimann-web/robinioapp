@@ -2,6 +2,7 @@
   "brand": "MoneyBear",
   "nav": {
     "home": "Avaleht",
+    "pricing": "Hinnastamine",
     "tips": "Nipid ja trikid",
     "privacy": "Privaatsus",
     "terms": "Tingimused",
@@ -159,6 +160,19 @@
       "Privaatsusküsimused ja taotlused: support@moneybear.eu",
       "Vastutav töötleja: Robinio Invest OÜ, Vesivärava 22-4, Tallinn, Estonia 10126"
     ]
+  },
+  "pricing": {
+    "title": "Hinnastamine",
+    "subtitle": "Alusta 7-päevase tasuta prooviperioodiga ja jätka kuupõhise tellimusega.",
+    "trialEyebrow": "Tasuta proov",
+    "trialTitle": "7 päeva tasuta",
+    "trialBody": "Proovi kõiki Premium funktsioone kuni 7 päeva tasuta. Tühista igal ajal enne perioodi lõppu.",
+    "premiumEyebrow": "Premium",
+    "premiumPrice": "Alates 0,99 € / kuu",
+    "premiumBody": "Pärast prooviperioodi pikeneb tellimus kuupõhiselt. Halda või tühista igal ajal Google Play’s.",
+    "note": "Lõplik hind ja valuuta kuvatakse Google Play’s ning võivad riigiti erineda.",
+    "ctaPrimary": "Ava Google Play",
+    "ctaSecondary": "Võta ühendust"
   },
   "terms": {
     "title": "Kasutustingimused",

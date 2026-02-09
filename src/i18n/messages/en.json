@@ -2,6 +2,7 @@
   "brand": "MoneyBear",
   "nav": {
     "home": "Home",
+    "pricing": "Pricing",
     "tips": "Tips and tricks",
     "privacy": "Privacy",
     "terms": "Terms",
@@ -159,6 +160,19 @@
       "Privacy questions and requests: support@moneybear.eu",
       "Data controller: Robinio Invest OÜ, Vesivärava 22-4, Tallinn, Estonia 10126"
     ]
+  },
+  "pricing": {
+    "title": "Pricing",
+    "subtitle": "Start with a 7-day free trial, then continue on a monthly subscription.",
+    "trialEyebrow": "Free trial",
+    "trialTitle": "7 days free",
+    "trialBody": "Try all Premium features free for up to 7 days. Cancel anytime before the trial ends.",
+    "premiumEyebrow": "Premium",
+    "premiumPrice": "From €0.99 / month",
+    "premiumBody": "After the trial, your subscription renews monthly. Manage or cancel anytime in Google Play.",
+    "note": "Final price and currency are shown in Google Play and may vary by country.",
+    "ctaPrimary": "Open Google Play",
+    "ctaSecondary": "Contact us"
   },
   "terms": {
     "title": "Terms of Service",
