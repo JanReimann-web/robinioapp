@@ -1,15 +1,11 @@
 import { NextResponse } from "next/server";
-import { promises as fs } from "fs";
-import path from "path";
 import { applyRateLimit, isAuthorized } from "@/lib/adminSecurity";
+import { getWaitlistFirestore } from "@/lib/waitlistFirestore";
 
 type InterestEntry = {
   email: string;
   createdAt: string;
 };
-
-const dataDir = path.join(process.cwd(), "data");
-const dataFile = path.join(dataDir, "ios-interest.json");
 
 export const runtime = "nodejs";
 
@@ -27,18 +23,6 @@ const rateLimitResponse = (retryAfter: number) =>
     }
   );
 
-const readEntries = async (): Promise<InterestEntry[]> => {
-  try {
-    const raw = await fs.readFile(dataFile, "utf8");
-    return JSON.parse(raw) as InterestEntry[];
-  } catch (error) {
-    if ((error as NodeJS.ErrnoException).code === "ENOENT") {
-      return [];
-    }
-    throw error;
-  }
-};
-
 const escapeCsv = (value: string) => {
   if (value.includes(",") || value.includes("\"") || value.includes("\n")) {
     return `"${value.replace(/"/g, "\"\"")}"`;
@@ -51,6 +35,14 @@ export async function GET(request: Request) {
   if (!limit.allowed) {
     return rateLimitResponse(limit.retryAfter);
   }
+
+  const db = getWaitlistFirestore();
+  if (!db) {
+    return NextResponse.json(
+      { ok: false, message: "Server misconfigured" },
+      { status: 500, headers: { "Cache-Control": "no-store" } }
+    );
+  }
   if (!isAuthorized(request)) {
     return NextResponse.json(
       { ok: false, message: "Unauthorized" },
@@ -58,7 +50,14 @@ export async function GET(request: Request) {
     );
   }
 
-  const entries = await readEntries();
+  const snapshot = await db
+    .collection("ios_interest")
+    .orderBy("createdAt", "desc")
+    .limit(5000)
+    .get();
+  const entries = snapshot.docs
+    .map((doc) => doc.data() as InterestEntry)
+    .filter((entry) => typeof entry?.email === "string");
   const header = "email,createdAt";
   const rows = entries.map(
     (entry) => `${escapeCsv(entry.email)},${escapeCsv(entry.createdAt)}`
