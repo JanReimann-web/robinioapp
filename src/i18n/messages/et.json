@@ -3,7 +3,6 @@
   "nav": {
     "home": "Avaleht",
     "pricing": "Hinnastamine",
-    "tips": "Nipid ja trikid",
     "privacy": "Privaatsus",
     "terms": "Tingimused",
     "contact": "Kontakt"
@@ -251,38 +250,6 @@
       "16. Kontakt",
       "Küsimused ja tugi: support@moneybear.eu"
     ]
-  },
-  "tips": {
-    "title": "Nipid ja trikid",
-    "intro": "Lihtsad viisid, kuidas MoneyBearist maksimum võtta ja rahaasjad selgeks teha.",
-    "sections": [
-      {
-        "title": "Alusta põhilisest",
-        "items": [
-          "Ühenda peamised kontod ja kontrolli, et kategooriad on õiged.",
-          "Sea realistlik kuueelarve, et ülevaade püsiks tähenduslik.",
-          "Tõsta olulisemad kategooriad oma vaates esile."
-        ]
-      },
-      {
-        "title": "Lase MoneyBearil aidata",
-        "items": [
-          "Loo säästueesmärgid ja jälgi edenemist nädalate kaupa.",
-          "Lülita sisse hoiatused ebatavaliste kulude või madala saldo jaoks.",
-          "Kasuta korduvkulude meeldetuletusi, et üllatusi vältida."
-        ]
-      },
-      {
-        "title": "Ehita nädalane harjumus",
-        "items": [
-          "Tee 5-minutiline nädala ülevaade ja kohanda plaani.",
-          "Märgi suuremad ostud siltidega, et need hiljem kiiresti leida.",
-          "Võrdle seda kuud eelmisega, et mustreid märgata."
-        ]
-      }
-    ],
-    "ctaTitle": "Vajad personaalset abi?",
-    "ctaBody": "Kirjuta meile ja aitame MoneyBeari sinu vajaduste järgi seadistada."
   },
   "contact": {
     "title": "Kontakt",

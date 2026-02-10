@@ -12,7 +12,6 @@ type NavLabels = {
   privacy: string;
   terms: string;
   contact: string;
-  tips: string;
 };
 
 type HeaderProps = {
@@ -44,11 +43,6 @@ export default function Header({ locale, brand, nav, cta }: HeaderProps) {
     ],
     [locale, nav]
   );
-  const tipsItem = useMemo(
-    () => ({ href: `/${locale}/tips`, label: nav.tips }),
-    [locale, nav]
-  );
-
   const localeLinks = [
     { code: "en", label: "EN" },
     { code: "et", label: "ET" },
@@ -137,12 +131,6 @@ export default function Header({ locale, brand, nav, cta }: HeaderProps) {
               })}
             </div>
             <Link
-              href={tipsItem.href}
-              className="rounded-full border border-white/20 bg-white/5 px-4 py-2 text-sm font-semibold text-white/90 transition hover:border-white/40 hover:bg-white/10"
-            >
-              {tipsItem.label}
-            </Link>
-            <Link
               href={`/${locale}/contact`}
               className="rounded-full bg-white px-4 py-2 text-sm font-semibold text-emerald-950 shadow-sm transition hover:-translate-y-0.5 hover:bg-emerald-100"
             >
@@ -211,13 +199,6 @@ export default function Header({ locale, brand, nav, cta }: HeaderProps) {
             </div>
 
             <div className="mt-8 flex flex-col items-start gap-3">
-              <Link
-                href={tipsItem.href}
-                className="inline-flex w-fit items-center rounded-full border border-white/30 px-5 py-3 text-base font-semibold text-white transition hover:border-white"
-                onClick={closeMenu}
-              >
-                {tipsItem.label}
-              </Link>
               <Link
                 href={`/${locale}/contact`}
                 className="inline-flex w-fit items-center rounded-full bg-white px-5 py-3 text-base font-semibold text-emerald-950 shadow-sm"

@@ -3,7 +3,6 @@
   "nav": {
     "home": "Home",
     "pricing": "Pricing",
-    "tips": "Tips and tricks",
     "privacy": "Privacy",
     "terms": "Terms",
     "contact": "Contact"
@@ -251,38 +250,6 @@
       "16. Contact",
       "Questions and support: support@moneybear.eu"
     ]
-  },
-  "tips": {
-    "title": "Tips and tricks",
-    "intro": "Simple ways to get the most out of MoneyBear and keep your money decisions clear.",
-    "sections": [
-      {
-        "title": "Start with your essentials",
-        "items": [
-          "Connect your main accounts and confirm the categories are correct.",
-          "Set a realistic monthly budget so the overview stays meaningful.",
-          "Pin the most important categories to your dashboard."
-        ]
-      },
-      {
-        "title": "Let MoneyBear guide you",
-        "items": [
-          "Create saving goals and track progress week by week.",
-          "Turn on alerts for unusual spending or low balances.",
-          "Use recurring expense reminders to avoid surprises."
-        ]
-      },
-      {
-        "title": "Build a weekly habit",
-        "items": [
-          "Review your week in 5 minutes and adjust your plan.",
-          "Tag bigger purchases so you can find them quickly later.",
-          "Compare this month with last month to spot trends."
-        ]
-      }
-    ],
-    "ctaTitle": "Want personal help?",
-    "ctaBody": "Write to us and we will help you set up MoneyBear for your needs."
   },
   "contact": {
     "title": "Contact",
