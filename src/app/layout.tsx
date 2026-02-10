@@ -15,13 +15,37 @@ const plexMono = IBM_Plex_Mono({
   display: "swap",
 });
 
+const defaultDescription =
+  "A modern financial tool that makes finance feel effortless. MoneyBear is designed for people who want clarity without complexity.";
+
 export const metadata: Metadata = {
+  metadataBase: new URL("https://moneybear.eu"),
   title: {
     default: "MoneyBear",
     template: "%s | MoneyBear",
   },
-  description:
-    "MoneyBear builds simple, secure financial tools for modern life. Learn more about our mobile app and company.",
+  description: defaultDescription,
+  openGraph: {
+    title: "MoneyBear",
+    description: defaultDescription,
+    url: "https://moneybear.eu",
+    siteName: "MoneyBear",
+    type: "website",
+    images: [
+      {
+        url: "/og-home.png",
+        width: 1200,
+        height: 630,
+        alt: "MoneyBear",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "MoneyBear",
+    description: defaultDescription,
+    images: ["/og-home.png"],
+  },
   icons: {
     icon: [{ url: "/Moneybearlogo.svg", type: "image/svg+xml" }],
     shortcut: "/Moneybearlogo.svg",
