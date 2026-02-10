@@ -28,14 +28,10 @@ export const getAdminCode = (request: Request) =>
 export const isAuthorized = (request: Request) => {
   const adminCode = process.env.ADMIN_ACCESS_CODE ?? "";
   if (!adminCode) {
-    console.error("[admin] ADMIN_ACCESS_CODE is not set in the runtime environment.");
     return false;
   }
   const provided = getAdminCode(request);
   const ok = safeEqual(provided, adminCode);
-  if (!ok && provided) {
-    console.warn("[admin] Invalid admin code provided.");
-  }
   return ok;
 };
 
