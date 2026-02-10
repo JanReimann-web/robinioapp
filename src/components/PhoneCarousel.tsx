@@ -108,11 +108,7 @@ export default function PhoneCarousel() {
                           <div className="absolute inset-0">
                             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.12),_transparent_60%)]" />
                           </div>
-                          <div className="absolute inset-4 rounded-[28px] border border-white/10 bg-white/5" />
                         </>
-                      )}
-                      {slide.videoSrc && (
-                        <div className="pointer-events-none absolute inset-4 rounded-[28px] border border-white/10" />
                       )}
                       {!slide.videoSrc && (
                         <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white/80">
