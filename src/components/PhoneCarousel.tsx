@@ -7,6 +7,7 @@ type Slide = {
   label: string;
   accent: string;
   glow: string;
+  videoSrc?: string;
 };
 
 const slides: Slide[] = [
@@ -15,6 +16,7 @@ const slides: Slide[] = [
     label: "Overview",
     accent: "from-emerald-500/35 via-emerald-600/15 to-transparent",
     glow: "bg-emerald-400/30",
+    videoSrc: "/MBvideo1.mp4",
   },
   {
     id: "insights",
@@ -87,6 +89,17 @@ export default function PhoneCarousel() {
                   <div className="absolute left-1/2 top-6 h-1.5 w-10 -translate-x-1/2 rounded-full bg-white/20" />
                   <div className="p-3">
                     <div className="relative aspect-[9/19.5] overflow-hidden rounded-[36px] bg-slate-950">
+                      {slide.videoSrc && (
+                        <video
+                          className="absolute inset-0 h-full w-full object-cover"
+                          src={slide.videoSrc}
+                          autoPlay
+                          loop
+                          muted
+                          playsInline
+                          preload="metadata"
+                        />
+                      )}
                       <div
                         className={`absolute inset-0 bg-gradient-to-br ${slide.accent}`}
                       />
@@ -94,14 +107,16 @@ export default function PhoneCarousel() {
                         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.12),_transparent_60%)]" />
                       </div>
                       <div className="absolute inset-4 rounded-[28px] border border-white/10 bg-white/5" />
-                      <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white/80">
-                        <div className="flex h-12 w-12 items-center justify-center rounded-full border border-white/30 bg-white/10">
-                          <div className="ml-1 h-0 w-0 border-y-[7px] border-l-[12px] border-y-transparent border-l-white/70" />
+                      {!slide.videoSrc && (
+                        <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white/80">
+                          <div className="flex h-12 w-12 items-center justify-center rounded-full border border-white/30 bg-white/10">
+                            <div className="ml-1 h-0 w-0 border-y-[7px] border-l-[12px] border-y-transparent border-l-white/70" />
+                          </div>
+                          <span className="mt-3 text-xs uppercase tracking-[0.3em] text-white/60">
+                            9:16
+                          </span>
                         </div>
-                        <span className="mt-3 text-xs uppercase tracking-[0.3em] text-white/60">
-                          9:16
-                        </span>
-                      </div>
+                      )}
                     </div>
                   </div>
                   <div className="pointer-events-none absolute inset-0 rounded-[44px] ring-1 ring-white/10" />
