@@ -23,12 +23,14 @@ const slides: Slide[] = [
     label: "Insights",
     accent: "from-teal-400/30 via-emerald-500/20 to-transparent",
     glow: "bg-teal-400/30",
+    videoSrc: "/MBvideo2.mp4",
   },
   {
     id: "goals",
     label: "Goals",
     accent: "from-green-400/30 via-emerald-500/20 to-transparent",
     glow: "bg-green-400/30",
+    videoSrc: "/MBvideo3.mp4",
   },
 ];
 
