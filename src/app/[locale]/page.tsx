@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { Layers, ShieldCheck, Sparkles } from "lucide-react";
 import IosInterestForm from "@/components/IosInterestForm";
 import PhoneCarousel from "@/components/PhoneCarousel";
@@ -7,6 +6,9 @@ import { getMessages } from "@/i18n/getMessages";
 type HomePageProps = {
   params: Promise<{ locale: string }>;
 };
+
+const PLAY_STORE_URL =
+  "https://play.google.com/store/apps/details?id=com.jan.moneybear";
 
 export default async function HomePage({ params }: HomePageProps) {
   const { locale } = await params;
@@ -70,12 +72,14 @@ export default async function HomePage({ params }: HomePageProps) {
               {messages.hero.subtitle}
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Link
-                href={`/${locale}/contact`}
+              <a
+                href={PLAY_STORE_URL}
+                target="_blank"
+                rel="noreferrer"
                 className="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-emerald-950 shadow-lg shadow-emerald-950/40 transition hover:-translate-y-0.5 hover:bg-emerald-100"
               >
                 {messages.hero.ctaPrimary}
-              </Link>
+              </a>
             </div>
             <p className="mt-4 text-sm text-emerald-200/70">
               {messages.hero.note}

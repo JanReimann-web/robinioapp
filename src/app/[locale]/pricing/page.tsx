@@ -10,7 +10,8 @@ export default async function PricingPage({ params }: PricingPageProps) {
   const messages = await getMessages(locale);
   const pricing = messages.pricing;
 
-  const playStoreUrl = "";
+  const playStoreUrl =
+    "https://play.google.com/store/apps/details?id=com.jan.moneybear";
   const hasPlayStoreUrl = playStoreUrl.trim().length > 0;
 
   return (

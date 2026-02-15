@@ -21,6 +21,9 @@ type HeaderProps = {
   cta: string;
 };
 
+const PLAY_STORE_URL =
+  "https://play.google.com/store/apps/details?id=com.jan.moneybear";
+
 const buildLocalePath = (pathname: string, targetLocale: string) => {
   const segments = pathname.split("/").filter(Boolean);
   const rest = segments.length > 0 ? segments.slice(1).join("/") : "";
@@ -130,12 +133,14 @@ export default function Header({ locale, brand, nav, cta }: HeaderProps) {
                 );
               })}
             </div>
-            <Link
-              href={`/${locale}/contact`}
+            <a
+              href={PLAY_STORE_URL}
+              target="_blank"
+              rel="noreferrer"
               className="rounded-full bg-white px-4 py-2 text-sm font-semibold text-emerald-950 shadow-sm transition hover:-translate-y-0.5 hover:bg-emerald-100"
             >
               {cta}
-            </Link>
+            </a>
           </div>
 
           <button
@@ -199,13 +204,15 @@ export default function Header({ locale, brand, nav, cta }: HeaderProps) {
             </div>
 
             <div className="mt-8 flex flex-col items-start gap-3">
-              <Link
-                href={`/${locale}/contact`}
+              <a
+                href={PLAY_STORE_URL}
+                target="_blank"
+                rel="noreferrer"
                 className="inline-flex w-fit items-center rounded-full bg-white px-5 py-3 text-base font-semibold text-emerald-950 shadow-sm"
                 onClick={closeMenu}
               >
                 {cta}
-              </Link>
+              </a>
             </div>
           </div>
         </div>
