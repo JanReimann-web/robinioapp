@@ -81,9 +81,11 @@ export default async function HomePage({ params }: HomePageProps) {
                 {messages.hero.ctaPrimary}
               </a>
             </div>
-            <p className="mt-4 text-sm text-emerald-200/70">
-              {messages.hero.note}
-            </p>
+            {messages.hero.note.trim().length > 0 ? (
+              <p className="mt-4 text-sm text-emerald-200/70">
+                {messages.hero.note}
+              </p>
+            ) : null}
             <div className="mt-8 rounded-2xl border border-white/15 bg-white/10 p-5 shadow-lg shadow-emerald-950/30 backdrop-blur">
               <IosInterestForm
                 title={messages.hero.iosTitle}
@@ -99,7 +101,7 @@ export default async function HomePage({ params }: HomePageProps) {
           </div>
 
           <div className="flex justify-center lg:justify-end">
-            <PhoneCarousel />
+            <PhoneCarousel videoTitles={messages.hero.videoTitles} />
           </div>
         </div>
       </section>

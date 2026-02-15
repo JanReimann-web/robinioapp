@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 type Slide = {
   id: string;
@@ -10,34 +10,44 @@ type Slide = {
   videoSrc?: string;
 };
 
+type PhoneCarouselProps = {
+  videoTitles?: string[];
+};
+
 const slides: Slide[] = [
   {
     id: "overview",
-    label: "Overview",
+    label: "Homescreen",
     accent: "from-emerald-500/35 via-emerald-600/15 to-transparent",
     glow: "bg-emerald-400/30",
     videoSrc: "/MBvideo1.mp4",
   },
   {
     id: "insights",
-    label: "Insights",
+    label: "Transaction entry",
     accent: "from-teal-400/30 via-emerald-500/20 to-transparent",
     glow: "bg-teal-400/30",
     videoSrc: "/MBvideo2.mp4",
   },
   {
     id: "goals",
-    label: "Goals",
+    label: "Settings",
     accent: "from-green-400/30 via-emerald-500/20 to-transparent",
     glow: "bg-green-400/30",
     videoSrc: "/MBvideo3.mp4",
   },
 ];
 
-export default function PhoneCarousel() {
+export default function PhoneCarousel({ videoTitles }: PhoneCarouselProps) {
   const [index, setIndex] = useState(0);
   const [startX, setStartX] = useState<number | null>(null);
-  const current = slides[index];
+  const [isDesktop, setIsDesktop] = useState(false);
+  const videoRefs = useRef<Array<HTMLVideoElement | null>>([]);
+
+  const titles = useMemo(
+    () => (videoTitles?.length === slides.length ? videoTitles : slides.map((slide) => slide.label)),
+    [videoTitles]
+  );
 
   const translate = useMemo(
     () => `translateX(-${index * 100}%)`,
@@ -47,6 +57,27 @@ export default function PhoneCarousel() {
   const goPrev = () =>
     setIndex((prev) => (prev - 1 + slides.length) % slides.length);
   const goNext = () => setIndex((prev) => (prev + 1) % slides.length);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(min-width: 1024px)");
+    const updateDesktopState = () => setIsDesktop(mediaQuery.matches);
+    updateDesktopState();
+    mediaQuery.addEventListener("change", updateDesktopState);
+    return () => mediaQuery.removeEventListener("change", updateDesktopState);
+  }, []);
+
+  useEffect(() => {
+    videoRefs.current.forEach((video, videoIndex) => {
+      if (!video) return;
+      if (videoIndex === index) {
+        video.currentTime = 0;
+        void video.play().catch(() => undefined);
+        return;
+      }
+      video.pause();
+      video.currentTime = 0;
+    });
+  }, [index, isDesktop]);
 
   const handleTouchStart = (event: React.TouchEvent<HTMLDivElement>) => {
     setStartX(event.touches[0]?.clientX ?? null);
@@ -66,10 +97,18 @@ export default function PhoneCarousel() {
     setStartX(null);
   };
 
+  const handleVideoEnded = (slideIndex: number) => {
+    if (!isDesktop || slideIndex !== index) return;
+    goNext();
+  };
+
   return (
     <div className="relative mx-auto w-full max-w-sm lg:max-w-md">
       <div className="absolute -left-10 top-8 h-32 w-32 rounded-full bg-emerald-400/20 blur-3xl" />
       <div className="absolute -right-12 bottom-6 h-32 w-32 rounded-full bg-teal-400/20 blur-3xl" />
+      <p className="mb-3 text-center text-xs font-semibold uppercase tracking-[0.2em] text-emerald-100/80">
+        {titles[index] ?? slides[index]?.label}
+      </p>
 
       <div
         className="relative overflow-hidden touch-pan-y"
@@ -80,7 +119,7 @@ export default function PhoneCarousel() {
           className="flex transition-transform duration-700 ease-out"
           style={{ transform: translate }}
         >
-          {slides.map((slide) => (
+          {slides.map((slide, slideIndex) => (
             <div key={slide.id} className="w-full flex-shrink-0 px-3">
               <div className="relative mx-auto w-full max-w-[320px] animate-phone-float">
                 <div
@@ -93,13 +132,17 @@ export default function PhoneCarousel() {
                     <div className="relative aspect-[9/19.5] overflow-hidden rounded-[36px] bg-slate-950">
                       {slide.videoSrc && (
                         <video
+                          ref={(element) => {
+                            videoRefs.current[slideIndex] = element;
+                          }}
                           className="absolute inset-0 h-full w-full object-cover"
                           src={slide.videoSrc}
-                          autoPlay
-                          loop
+                          autoPlay={slideIndex === index}
+                          loop={!isDesktop}
                           muted
                           playsInline
                           preload="metadata"
+                          onEnded={() => handleVideoEnded(slideIndex)}
                         />
                       )}
                       {!slide.videoSrc && (
@@ -138,7 +181,7 @@ export default function PhoneCarousel() {
             key={slide.id}
             type="button"
             onClick={() => setIndex(slideIndex)}
-            aria-label={`Go to ${slide.label}`}
+            aria-label={`Go to ${titles[slideIndex] ?? slide.label}`}
             className={`h-2.5 w-2.5 rounded-full transition ${
               slideIndex === index
                 ? "bg-white"
@@ -147,7 +190,7 @@ export default function PhoneCarousel() {
           />
         ))}
       </div>
-      <p className="sr-only">{current.label}</p>
+      <p className="sr-only">{titles[index] ?? slides[index]?.label}</p>
     </div>
   );
 }
